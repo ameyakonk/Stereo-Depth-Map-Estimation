@@ -1,0 +1,193 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{indentfirst}
+\usepackage{array, amsmath}
+\usepackage{stackengine}
+\usepackage{hyperref}
+    \title{\textbf{Project-3}}
+    \author{Ameya Konkar  UID: 118191058}
+    \date{}
+    
+    \addtolength{\topmargin}{-3cm}
+    \addtolength{\textheight}{3cm}
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\section{Calibration}
+Following are the steps to calibrate an image using \textbf{ORB feature matching}.
+
+\begin{description}
+\addtolength{\itemindent}{0.80cm}
+\itemsep0em 
+
+\item[1.] Converted the image into grayscale. 
+\item[2.] Found matched features between respective images.
+\item[3.] Segregated only the useful features points based on Lowe's paper.
+\item[4.] Passed the points to compute Feature matrix using \textbf{RANSAC}.
+\newline
+
+\item[a)] \textbf{RANSAC}.
+\item[1.] Selected random 8 points of both the images.
+\item[2.] Normalised the points using \textbf{Normalisation} process and compute the \textbf{F} matrix.
+\item[3.] Unnormalised the \textbf{F} matrix.
+\item[4.] For all the points in both the images, checked if dstpoints*\textbf{F}*srcpoints.T is less than a certain threshold.
+\item[5.] Stored the points and the fundamental matrix if the number of points found in the current iteration is greater than previously found.
+\item[6.] Repeated the above process for fixed number of iterations.
+\newline
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.2\textwidth]{Fundamental Matrix}
+	\caption{Fundamental matrix after performing RANSAC} 
+\end{figure}
+
+\item[b)] \textbf{Normalisation}.
+\item[1.] Compute the mean of the points.
+\item[2.] Shift the origin of the points by the mean value.
+\item[3.] Compute \textbf{S} matrix for the points.
+\item[4.] Compute \textbf{T} matrix based on the \textbf{S} matrices.
+\item[5.] Compute nomalised points by multiplying \textbf{T} matrix with the original points.
+\newline
+
+\item[b)] \textbf{Compute Fundamental matrix}.
+\item[1.] Find the \textbf{A} matrix based on the values of 8 selected features.
+\item[2.] Find the SVD of A.
+\item[3.] Selected the Fundamental matrix as the last column of the \textbf{V} matrix
+\item[4.] if the rank of the \textbf{F} matrix is 3, then reduced it by taking its SVD and setting its last element to zero and recomputing the F matrix.
+\newline
+
+\item[b)] \textbf{Compute Essential matrix, Rotation matrix, Translational matrix}.
+\item[1.] Find the \textbf{E} matrix such that \textbf{K.T}*\textbf{F}*\textbf{K}.
+\item[2.] Compute 4 possible combinations of \textbf{R} and \textbf{T} matrices.
+\item[3.] Selected the Fundamental matrix as the last column of the \textbf{V} matrix
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.2\textwidth]{Essential_mat}
+	\caption{Essential matrix} 
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.1\textwidth]{T martix}
+	\caption{T matrix} 
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.2\textwidth]{R_mat}
+	\caption{R matrix} 
+\end{figure}
+
+\end{description}
+
+\section{Rectification}
+Following are the steps to rectify the images using found \textbf{F} matrix.
+\begin{description}
+\addtolength{\itemindent}{0.80cm}
+\itemsep0em 
+\item[1.] Plot epipolar lines on unrectified images.Computed homography matrices for both the images using cv2.stereoRectifyUncalibrated.
+\item[2.] Used the homography matrices to warp the images. Changed the Fundamental matrix for the warped images.
+\item[3.] plot the epipolar lines on the images.
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.3\textwidth]{unrectified_RANSAC}
+	\caption{Epipolar lines on unrectified images of Curule} 
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.4\textwidth]{unrectified_RANSAC_o}
+	\caption{Epipolar lines on unrectified images of Octagon} 
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.4\textwidth]{unrectified_RANSAC_p}
+	\caption{Epipolar lines on unrectified images of Pendulum} 
+\end{figure}
+
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.3\textwidth]{rectified_RANSAC}
+	\caption{Epipolar lines on rectified images of Curule} 
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.4\textwidth]{rectified_RANSAC_o}
+	\caption{Epipolar lines on rectified images of Octagon} 
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.4\textwidth]{rectified_RANSAC_p}
+	\caption{Epipolar lines on rectified images of Pendulum} 
+\end{figure}
+
+\end{description}
+
+\section{Correspondance}
+Following are the steps to find the disparity map for the images.
+\begin{description}
+\addtolength{\itemindent}{0.80cm}
+\itemsep0em 
+\item[1.] Considered an empty image of the same size of the images.
+\item[2.] Considered a block in the first image and found \textbf{SSD} between all the blocks in the same row in the second image till the x coordinate of the first image. 
+\item[3.] The block at the same position as the first image is considered in the empty image.
+\item[4.] Changed the value of the block with the index value of the minimum SSD block.
+\item[5.] Scaled the values of the pixels between 0-255.
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.6\textwidth]{Disparity}
+	\caption{Disparity Image of Curule} 
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.6\textwidth]{Disparity_o}
+	\caption{Disparity Image of Octagon} 
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.6\textwidth]{Disparity_p}
+	\caption{Disparity Image of Curule} 
+\end{figure}
+
+\end{description}
+
+\section{Depth}
+Following are the steps to find the disparity map for the images.
+\begin{description}
+\addtolength{\itemindent}{0.80cm}
+\itemsep0em 
+\item[1.] Computed the depth image as \textbf{1/disparity}*\textbf{f*baseline}  .
+\item[2.] Scaled the values of the pixels between 0-255.
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.6\textwidth]{depth}
+	\caption{Depth Image for Curule} 
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.6\textwidth]{depth_o}
+	\caption{Depth Image for Octagon} 
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[height=0.6\textwidth]{depth_p}
+	\caption{Depth Image for Pendulum} 
+\end{figure}
+\end{description}
+\end{document}
+

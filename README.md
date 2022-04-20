@@ -51,5 +51,5 @@ python calibration2.py -o 2
 
 For Pendulum Dataset.
 ``` 
-python calibration2.py -o 2
+python calibration2.py -o 3
 ```

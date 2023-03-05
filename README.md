@@ -67,7 +67,7 @@ Markup : - Curule
 </p>
 
 ### Rectified images
-<img src="https://user-images.githubusercontent.com/78075049/222946895-543fcd6d-668f-4f82-9f86-901cc5adea08.png" width="800" height="660">
+<img src="https://user-images.githubusercontent.com/78075049/222946895-543fcd6d-668f-4f82-9f86-901cc5adea08.png" width="900" height="460">
 
 ### Disparity map 
 <img src="https://user-images.githubusercontent.com/78075049/222946850-6c3eedea-7384-4636-af68-821f8622d991.png" width="800" height="580">

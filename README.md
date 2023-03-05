@@ -56,8 +56,6 @@ python calibration2.py -o 3
 ## Results
 ### Original images
 
-<img src="[https://user-images.githubusercontent.com/16319829/81180309-2b51f000-8fee-11ea-8a78-ddfe8c3412a7.png](https://user-images.githubusercontent.com/78075049/222946221-aa6260d9-bdd5-4db1-bace-dbbed800cdd7.png)" width="150" height="280">
-
 
 ![image](https://user-images.githubusercontent.com/78075049/222946262-9f915a81-ab35-4050-ac24-81ddb534d099.png)
 

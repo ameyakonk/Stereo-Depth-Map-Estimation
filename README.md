@@ -54,16 +54,23 @@ For Pendulum Dataset.
 python calibration2.py -o 3
 ```
 ## Results
+The depth estimation was performed on the three classes Curule, Pendulum and Octagon
+Folowing are the results for the Curule class
+
+Markup : - Curule
+          
 ### Original images
-####
-First Header  | Second Header
-------------- | -------------
-Content Cell  | Content Cell
-Content Cell  |  \| 
 
 <p float="left">
   <img src="https://user-images.githubusercontent.com/78075049/222946262-9f915a81-ab35-4050-ac24-81ddb534d099.png" width="400" height="280">
   <img src="https://user-images.githubusercontent.com/78075049/222946487-448c8c62-17a3-490d-91a3-0a80c20fcb82.png" width="400" height="280">
 </p>
 
+### Rectified images
+<img src="https://user-images.githubusercontent.com/78075049/222946262-9f915a81-ab35-4050-ac24-81ddb534d099.png" width="400" height="280">
 
+### Disparity map 
+<img src="https://user-images.githubusercontent.com/78075049/222946850-6c3eedea-7384-4636-af68-821f8622d991.png" width="400" height="280">
+
+### Depth map
+<img src="https://user-images.githubusercontent.com/78075049/222946829-b2923646-8d3b-4aeb-9414-5c55c7181838.png" width="400" height="280">

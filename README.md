@@ -53,3 +53,7 @@ For Pendulum Dataset.
 ``` 
 python calibration2.py -o 3
 ```
+## Results
+### Original images
+
+![image](https://user-images.githubusercontent.com/78075049/222946221-aa6260d9-bdd5-4db1-bace-dbbed800cdd7.png)
